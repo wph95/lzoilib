@@ -1,0 +1,74 @@
+trie
+struct trie{ 
+    const int MAXN=220;
+    int p,data[MAXN][26]; 
+    bool sign[MAXN]; 
+       
+　　void init()//初始化
+　　{ 
+      p=0; 
+      memset(data,0,sizeof(data)); 
+      memset(sign,0,sizeof(sign)); 
+    } 
+    int idx(char c) {return c-'a';} 
+       
+　　void insert(string s)//插入
+　　{ 
+      int u=0; 
+      for(int i=0;i<s.size();i++)
+　　  { 
+        char t=idx(s[i]); 
+       
+        if(data[u][t]) 
+          u=data[u][t]; 
+        else
+　　    { 
+          data[u][t]=++p; 
+          u=p; 
+        } 
+      } 
+      sign[u]=true; 
+    } 
+       
+　　bool find(string s)//查找
+　　{ 
+      int u=0; 
+      for(int i=0;i<s.size();i++)
+      { 
+        char t=idx(s[i]); 
+       
+        if(data[u][t]) 
+          u=data[u][t]; 
+        else 
+          return false; 
+      } 
+      return sign[u]; 
+    } 
+       
+  }
+
+LIS/*O(nlog(n))*/
+
+#include<cstdio> 
+#include<algorithm> 
+#include<cstring> 
+using namespace std; 
+  Const int MAXN=6060;
+int main(){ 
+  int n,a[MAXN],d[MAXN],g[MAXN],maxn=0; 
+                 
+  scanf("%d",&n); 
+  for(int i=0;i<n;i++) 
+    scanf("%d",&a[i]); 
+  memset(g,0x7f,sizeof(g)); 
+  for(int i=0;i<n;i++){ 
+    int k=lower_bound(g+1,g+n+1,a[i])-g; 
+    d[i]=k; 
+    g[k]=a[i]; 
+    maxn=max(maxn,d[i]); 
+  } 
+  printf("%d\n",maxn); 
+                 
+  return 0; 
+}
+
